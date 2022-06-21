@@ -3,13 +3,10 @@
 using namespace game;
 
 int FizzBuzz::start(void){
-    bool number_defined = false;
     bool divisible_by_3 = false;
     bool divisible_by_5 = false;
 
     while(++_current_number <= _end){
-        number_defined = false;
-
         divisible_by_3 = _current_number % 3 == 0;
         divisible_by_5 = _current_number % 5 == 0;
 
