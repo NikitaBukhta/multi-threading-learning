@@ -21,18 +21,11 @@ std::string Client::get_data(void){
     std::thread status_bar_th(&Client::show_progress_bar, this, msg_size_to_read);
  
     std::unique_lock guard(_read_data_mut);
+    guard.unlock();
     while((current_data_size = _data.size()) < msg_size_to_read){
         random_bytes_count = random_number(0, msg_size_to_read - current_data_size);
         
-        /* I do not know why, but std::unique_lock::try_lock method throw the next
-         * exception:
-         *  << unique_lock::try_lock: already locked: Resource deadlock avoided >>
-         * 
-         * So I decided to check if mutex is locked;
-         */
-        if (!guard.owns_lock()){
-            guard.lock();
-        }
+        guard.lock();
  
         // Allocate new memory space to push new data;
         _data.resize(random_bytes_count + current_data_size);
