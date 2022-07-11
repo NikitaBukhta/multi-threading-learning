@@ -45,7 +45,7 @@ int main(int argc, char **argv){
         th.join();
     }
 
-    if (!ptr){
+    if (ptr){
         delete ptr;
     }
 
